@@ -4,7 +4,7 @@
 # DRY up all the code below - there shouldn't be a single method duplicated between
 # any two classes.
 
-class SimpleCalculator
+module SimpleCalculations
 
   def add(first_number, second_number)
     first_number + second_number
@@ -21,51 +21,36 @@ class SimpleCalculator
   def divide(first_number, second_number)
     first_number / second_number
   end
-
 end
 
-class FancyCalculator
-
-  def add(first_number, second_number)
-    first_number + second_number
-  end
-
-  def subtract(first_number, second_number)
-    first_number - second_number
-  end
-
-  def multiply(first_number, second_number)
-    first_number * second_number
-  end
-
-  def divide(first_number, second_number)
-    first_number / second_number
-  end
-
+module FancyCalculations  
   def square_root(number)
     Math.sqrt(number)
   end
+end
 
+class SimpleCalculator
+  include SimpleCalculations
+  def initialize(simple)
+    @simple = simple
+  end
+end
+
+class FancyCalculator
+  include SimpleCalculations
+  include FancyCalculations
+    def initialize(fancy)
+     @fancy = fancy
+    end
 end
 
 class WhizBangCalculator
+  include SimpleCalculations
+  include FancyCalculations
 
-  def add(first_number, second_number)
-    first_number + second_number
+  def initialize(wizbang)
+    @wizbang = wizbang
   end
-
-  def subtract(first_number, second_number)
-    first_number - second_number
-  end
-
-  def multiply(first_number, second_number)
-    first_number * second_number
-  end
-
-  def divide(first_number, second_number)
-    first_number / second_number
-  end
-
   def square_root(number)
     Math.sqrt(number)
   end
@@ -79,8 +64,110 @@ class WhizBangCalculator
     exponent_number.times { total = multiply(total,first_number) }
     total
   end
-
 end
 
 # Copy your driver code from the previous exercise and more below:
+
+
+simple = SimpleCalculator.new(first_number:12, second_number:4)
+
+result = simple.add(12, 4)
+
+puts "Test simple add"
+puts result
+
+
+if result == 16
+  puts "PASS!"
+else
+  puts "F"
+end
+
+result = simple.subtract(12, 4)
+
+puts "Test simple sub"
+puts result
+
+
+if result == 8
+  puts "PASS!"
+else
+  puts "F"
+end
+
+result = simple.multiply(12, 4)
+
+puts "Test simple mult"
+puts result
+
+
+if result == 48
+  puts "PASS!"
+else
+  puts "F"
+end
+
+result = simple.divide(12, 4)
+
+puts "Test simple divide"
+puts result
+
+
+if result == 3
+  puts "PASS!"
+else
+  puts "F"
+end
+
+fancy = FancyCalculator.new(12)
+
+
+result = fancy.square_root(144)
+
+puts "Test square root"
+puts result
+ 
+
+if result == 12
+  puts "PASS!"
+else
+  puts "F"
+end
+
+
+
+
+ result = fancy.add(12, 4)
+
+puts "Test fancy add"
+puts result
+
+
+if result == 16
+  puts "PASS!"
+else
+  puts "F"
+end
+
+whizbang = WhizBangCalculator.new(first_number: 3, second_number: 4, exponent_number: 5)
+
+result = whizbang.hypotenuse(3, 4)
+
+puts "Test Whiz!"
+puts result
+
+if result == 5
+  puts "PASS!"
+else
+  puts "F"
+end
+
+
+
+
+
+
+
+
+
 
