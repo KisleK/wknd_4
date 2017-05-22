@@ -4,6 +4,22 @@
 
 def find_missing_letter(range)
 
+    alphabet = ('a'..'z').to_a
+    range_array = range.split('')
+    first_letter = range_array.first
+    last_letter = range_array.last
+    missing_letters = []
+    for letter in (alphabet.index(first_letter)..alphabet.index(last_letter))
+      if range_array.index(alphabet[letter]).nil?
+        missing_letters << alphabet[letter]
+      end
+    end
+   
+    if missing_letters.length == 0
+      return nil
+    else
+      missing_letters.join
+    end
 end
 
 # Driver code - don't touch anything below this line.
